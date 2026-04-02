@@ -12,6 +12,10 @@ export async function getEmail(req, res, next) {
     return next(new HttpError(404, "Email not found."));
   }
 
+  if (req.onEmailViewed) {
+    await req.onEmailViewed();
+  }
+
   return res.json(email);
 }
 
