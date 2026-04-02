@@ -58,6 +58,8 @@ npm install
 cp .env.example .env
 ```
 
+If MongoDB is not running, the API will automatically fall back to in-memory storage unless `MONGODB_REQUIRED=true`.
+
 3. Seed initial email data (optional, recommended for matching frontend demo state):
 
 ```bash

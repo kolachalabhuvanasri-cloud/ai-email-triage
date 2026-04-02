@@ -7,7 +7,9 @@ export async function connectToDatabase() {
   mongoose.set("strictQuery", true);
 
   try {
-    await mongoose.connect(env.mongoUri);
+    await mongoose.connect(env.mongoUri, {
+      serverSelectionTimeoutMS: 3000,
+    });
     databaseConnected = true;
     console.log("Connected to MongoDB.");
   } catch (error) {
@@ -20,7 +22,10 @@ export async function connectToDatabase() {
     console.warn(
       "MongoDB connection failed. Falling back to in-memory email storage for this process.",
     );
-    console.warn(error.message);
+    console.warn(`MongoDB error: ${error.message}`);
+    console.warn(
+      "Start MongoDB locally on 127.0.0.1:27017 or set MONGODB_URI to a reachable instance.",
+    );
   }
 }
 
