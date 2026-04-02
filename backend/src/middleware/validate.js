@@ -3,6 +3,7 @@ import { HttpError } from "../utils/httpError.js";
 const CATEGORY_VALUES = new Set(["billing", "bug", "how_to", "feature_request", "other"]);
 const PRIORITY_VALUES = new Set(["low", "medium", "high", "urgent"]);
 const TEAM_VALUES = new Set(["support", "billing", "engineering"]);
+const ROLE_VALUES = new Set(["admin", "support_agent"]);
 
 export function validateTriageRequest(req, _res, next) {
   const { sender, subject, body } = req.body;
@@ -36,9 +37,21 @@ export function validateUpdateEmail(req, _res, next) {
 }
 
 export function validateAuth(req, _res, next) {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
   if (!email || !password) {
     return next(new HttpError(400, "email and password are required."));
+  }
+
+  if (role && !ROLE_VALUES.has(role)) {
+    return next(new HttpError(400, "role must be one of: admin, support_agent."));
+  }
+
+  return next();
+}
+
+export function validateGoogleAuth(req, _res, next) {
+  if (!req.body?.id_token) {
+    return next(new HttpError(400, "id_token is required."));
   }
 
   return next();

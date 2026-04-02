@@ -173,9 +173,24 @@ Request body (any subset allowed):
 
 Response: updated `EmailRecord`.
 
-### Optional auth endpoints (JWT)
+### Auth endpoints (JWT + roles + session controls)
 
-> Not required by current frontend, included for production readiness.
+These endpoints now include role-based access claims, optional remember-me sessions, and Google login support.
+
+
+#### Roles
+
+- `admin`
+- `support_agent`
+
+`/api/emails*` requires an authenticated user with one of the above roles.
+`/api/activity-logs` is restricted to `admin`.
+
+#### Session behavior
+
+- `remember_me: true` on login/signup/google uses `JWT_REMEMBER_EXPIRES_IN` (default `30d`).
+- Otherwise tokens use `JWT_EXPIRES_IN` (default `1d`).
+- Sessions also enforce inactivity timeout via `SESSION_IDLE_TIMEOUT_MINUTES` (default `30`).
 
 #### `POST /api/auth/signup`
 Body:
@@ -198,7 +213,7 @@ Body:
 }
 ```
 
-Both respond:
+Signup/login/google respond:
 
 ```json
 {
@@ -235,3 +250,28 @@ Response:
 - Frontend expects exact field names (snake_case for `customer_name`, `assigned_team`, etc.), so backend keeps those names.
 - Frontend currently has no auth wiring; auth APIs are provided but not enforced for email routes.
 - Triage generation intentionally mimics frontend mock logic so behavior is consistent when switching to real API mode.
+
+
+#### `POST /api/auth/google`
+Body:
+
+```json
+{
+  "id_token": "<google-id-token>",
+  "remember_me": true
+}
+```
+
+Requires `GOOGLE_CLIENT_ID` to be configured in backend env.
+
+#### `GET /api/activity-logs`
+Header:
+
+```bash
+Authorization: Bearer <jwt>
+```
+
+Query params:
+- `limit` (optional, default 100, max 500)
+
+Returns recent activity entries including who viewed which email (`action: "email.view"`).

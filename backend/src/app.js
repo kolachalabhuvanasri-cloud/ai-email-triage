@@ -3,6 +3,7 @@ import express from "express";
 import { env } from "./config/env.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { emailRouter } from "./routes/email.routes.js";
+import { activityRouter } from "./routes/activity.routes.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 
 const app = express();
@@ -27,6 +28,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/api", emailRouter);
 app.use("/api", authRouter);
+app.use("/api", activityRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
