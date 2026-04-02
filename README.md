@@ -1,60 +1,32 @@
-# AI Email Triage Frontend
+# AI Email Triage Frontend + Backend
 
-A React + TypeScript + Vite + Tailwind dashboard for reviewing customer support emails, AI triage output, and human follow-up actions.
+This repository now contains:
 
-## Tech stack
+- `src/` → React + TypeScript + Vite frontend dashboard
+- `backend/` → Express + MongoDB REST API that matches frontend endpoint expectations
 
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS
-
-## Getting started
-
-1. Install dependencies:
+## Frontend quick start
 
 ```bash
 npm install
-```
-
-2. Create your environment file:
-
-```bash
-copy .env.example .env
-```
-
-3. Update `VITE_API_BASE_URL` if your backend runs somewhere else.
-
-4. Start the development server:
-
-```bash
+cp .env.example .env
 npm run dev
 ```
 
-5. Open the app in the browser using the URL Vite prints in the terminal.
+Set:
 
-## Notes
-
-- The frontend never uses the Gemini API key directly.
-- If the backend is unavailable, the app automatically falls back to local mock data.
-- Mock triage actions still work so you can demo the full flow before backend integration is finished.
-
-## Suggested folder structure
-
-```text
-src/
-  app/
-  components/
-    common/
-    email/
-    layout/
-    triage/
-  data/
-  hooks/
-  pages/
-  services/
-  styles/
-  types/
-  utils/
+```bash
+VITE_API_BASE_URL=http://localhost:4000/api
 ```
 
+## Backend quick start
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run seed
+npm run dev
+```
+
+Detailed backend architecture, setup, and full API docs are in [`backend/README.md`](backend/README.md).
