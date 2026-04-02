@@ -58,3 +58,21 @@ src/
   utils/
 ```
 
+
+## Backend integration
+
+A complete Express + MongoDB backend is included in `backend/`.
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run seed
+npm run dev
+```
+
+Then set frontend env:
+
+```env
+VITE_API_BASE_URL=http://localhost:4000
+```
