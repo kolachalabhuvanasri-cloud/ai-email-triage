@@ -8,6 +8,11 @@ const splitCsv = (value) =>
     .map((item) => item.trim())
     .filter(Boolean) ?? [];
 
+const parseBoolean = (value, fallback = false) => {
+  if (value == null) return fallback;
+  return ["1", "true", "yes", "on"].includes(String(value).toLowerCase());
+};
+
 export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   port: Number.parseInt(process.env.PORT ?? "4000", 10),
@@ -15,4 +20,5 @@ export const env = {
   corsOrigins: splitCsv(process.env.CORS_ORIGIN),
   jwtSecret: process.env.JWT_SECRET ?? "change-me-in-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "1d",
+  mongoRequired: parseBoolean(process.env.MONGODB_REQUIRED, false),
 };

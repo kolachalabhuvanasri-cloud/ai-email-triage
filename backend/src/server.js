@@ -1,12 +1,13 @@
 import { app } from "./app.js";
-import { connectToDatabase } from "./config/db.js";
+import { connectToDatabase, isDatabaseConnected } from "./config/db.js";
 import { env } from "./config/env.js";
 
 async function bootstrap() {
   await connectToDatabase();
 
   app.listen(env.port, () => {
-    console.log(`Backend listening on http://localhost:${env.port}`);
+    const mode = isDatabaseConnected() ? "mongodb" : "in-memory";
+    console.log(`Backend listening on http://localhost:${env.port} (${mode} mode)`);
   });
 }
 
