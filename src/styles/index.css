@@ -1,78 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
-@import "tailwindcss";
-
 :root {
-  color-scheme: light;
-  font-family: "Manrope", sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 28%),
-    radial-gradient(circle at right 12%, rgba(251, 191, 36, 0.18), transparent 26%),
-    linear-gradient(180deg, #f7f4ec 0%, #eef4f3 100%);
-  color: #0f172a;
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #4f46e5;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); }
 
-html {
-  min-height: 100%;
-}
+.app-shell { min-height: 100vh; display: flex; }
+.sidebar { width: 220px; background: var(--surface); border-right: 1px solid #e2e8f0; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.main { flex: 1; padding: 1rem; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+.card { background: var(--surface); border-radius: 16px; padding: 1rem; border: 1px solid #e2e8f0; margin-bottom: 1rem; }
+.pie { width: 180px; height: 180px; border-radius: 50%; margin: 0.5rem auto; }
+.bar-row { display: grid; grid-template-columns: 70px 1fr 70px; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+.bar { height: 10px; background: linear-gradient(90deg, #06b6d4, #4f46e5); border-radius: 999px; }
+.form-grid { display: grid; gap: 0.6rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.table-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0; }
+input, select, textarea, button { padding: 0.58rem 0.7rem; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; color: inherit; }
+button { background: var(--accent); color: #fff; border: none; }
+button.active { background: #312e81; }
+.error { color: #dc2626; }
+.success { color: #16a34a; }
+.auth-card { width: min(450px, 92vw); margin: auto; background: var(--surface); border-radius: 16px; padding: 1.25rem; display: grid; gap: 0.6rem; border: 1px solid #e2e8f0; }
 
-body {
-  min-height: 100vh;
-  margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 28%),
-    radial-gradient(circle at right 12%, rgba(251, 191, 36, 0.18), transparent 26%),
-    linear-gradient(180deg, #f7f4ec 0%, #eef4f3 100%);
-  color: #0f172a;
-}
+.app-shell.dark { --bg: #020617; --surface: #0f172a; --text: #e2e8f0; --muted: #94a3b8; --accent: #8b5cf6; }
+.app-shell.dark input, .app-shell.dark select, .app-shell.dark textarea { background: #1e293b; border-color: #334155; }
 
-body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-  background-size: 36px 36px;
-  content: "";
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 92%);
+@media (max-width: 900px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+  .cards, .grid-two, .form-grid { grid-template-columns: 1fr; }
+  .table-row { grid-template-columns: 1fr; }
 }
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-textarea {
-  resize: vertical;
-}
-
-#root {
-  min-height: 100vh;
-}
-
-.panel-surface {
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(16px);
-  padding: 1.25rem;
-  overflow: hidden;
-}
-
-@media (min-width: 1280px) {
-  .panel-surface {
-    padding: 1.5rem;
-  }
-}
-
